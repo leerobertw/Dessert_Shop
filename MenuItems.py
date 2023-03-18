@@ -1,6 +1,5 @@
 from abc import ABC, abstractmethod
 from money.money import Money
-from money.currency import Currency
 
 entertainment_tax_rate = 0.07
 food_tax_rate = 0.0625
@@ -17,7 +16,7 @@ class MenuItem(ABC):
 
 
 class Candy(MenuItem):
-    price_per_pound = Money('4.75', Currency.USD)
+    price_per_pound = Money('4.75')
 
     def __init__(self, weight):
         self.weight = weight
@@ -30,7 +29,7 @@ class Candy(MenuItem):
 
 
 class Cookies(MenuItem):
-    price_per_dozen = Money('6.25', Currency.USD)
+    price_per_dozen = Money('6.25')
 
     def __init__(self, count):
         self.count = count
@@ -43,7 +42,7 @@ class Cookies(MenuItem):
 
 
 class IceCream(MenuItem):
-    price_per_scoop = Money('1.70', Currency.USD)
+    price_per_scoop = Money('1.70')
 
     def __init__(self, scoops):
         self.scoops = scoops
@@ -57,16 +56,19 @@ class IceCream(MenuItem):
 
 class Sundae(MenuItem):
     class HotFudge:
-        cost = Money('1.25', Currency.USD)
+        cost = Money('1.25')
+
+    class StrawberrySyrup:
+        cost = Money('0.75')
 
     class CarmelSyrup:
-        cost = Money('0.75', Currency.USD)
+        cost = Money('0.50')
 
     class Peanuts:
-        cost = Money('0.35', Currency.USD)
+        cost = Money('0.35')
 
     class Coconut:
-        cost = Money('0.20', Currency.USD)
+        cost = Money('0.20')
 
     def __init__(self):
         self.ice_cream_cost = IceCream(2).calculate_total()
