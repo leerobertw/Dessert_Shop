@@ -1,8 +1,10 @@
 from abc import ABC, abstractmethod
+from decimal import Decimal
 from money.money import Money
 
-entertainment_tax_rate = 0.07
-food_tax_rate = 0.0625
+entertainment_tax_rate = Decimal('0.07')
+food_tax_rate = Decimal('0.0625')
+
 
 class MenuItem(ABC):
 
@@ -16,20 +18,20 @@ class MenuItem(ABC):
 
 
 class Candy(MenuItem):
-    price_per_pound = Money('4.75')
+    price_per_pound = Money('4.75', 'USD')
 
     def __init__(self, weight):
-        self.weight = weight
+        self.weight = Decimal(weight)
 
     def calculate_total(self):
-        return Candy.price_per_pound * self.weight
+        return round(Candy.price_per_pound * self.weight, 2)
 
     def calculate_tax(self):
-        return self.calculate_total() * food_tax_rate
+        return round(self.calculate_total() * food_tax_rate, 2)
 
 
-class Cookies(MenuItem):
-    price_per_dozen = Money('6.25')
+class Cookies:
+    price_per_dozen = Money('6.25', 'USD')
 
     def __init__(self, count):
         self.count = count
@@ -38,11 +40,11 @@ class Cookies(MenuItem):
         return Cookies.price_per_dozen * self.count
 
     def calculate_tax(self):
-        return self.calculate_total() * food_tax_rate
+        return round(self.calculate_total() * food_tax_rate, 2)
 
 
-class IceCream(MenuItem):
-    price_per_scoop = Money('1.70')
+class IceCream:
+    price_per_scoop = Money('1.70', 'USD')
 
     def __init__(self, scoops):
         self.scoops = scoops
@@ -51,24 +53,24 @@ class IceCream(MenuItem):
         return IceCream.price_per_scoop * self.scoops
 
     def calculate_tax(self):
-        return self.calculate_total() * entertainment_tax_rate
+        return round(self.calculate_total() * entertainment_tax_rate, 2)
 
 
-class Sundae(MenuItem):
+class Sundae:
     class HotFudge:
-        cost = Money('1.25')
+        cost = Money('1.25', 'USD')
 
     class StrawberrySyrup:
-        cost = Money('0.75')
+        cost = Money('0.75', 'USD')
 
     class CarmelSyrup:
-        cost = Money('0.50')
+        cost = Money('0.50', 'USD')
 
     class Peanuts:
-        cost = Money('0.35')
+        cost = Money('0.35', 'USD')
 
     class Coconut:
-        cost = Money('0.20')
+        cost = Money('0.20', 'USD')
 
     def __init__(self):
         self.ice_cream_cost = IceCream(2).calculate_total()
@@ -81,7 +83,7 @@ class Sundae(MenuItem):
         return total
 
     def calculate_tax(self):
-        return self.calculate_total() * entertainment_tax_rate
+        return round(self.calculate_total() * entertainment_tax_rate, 2)
 
     def add_topping(self, topping):
         self.toppings.append(topping)
