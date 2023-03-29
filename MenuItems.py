@@ -1,24 +1,13 @@
 from abc import ABC, abstractmethod
-from decimal import Decimal
 from money.money import Money
 
 entertainment_tax_rate = Decimal('0.07')
 food_tax_rate = Decimal('0.0625')
 
 
-class MenuItem(ABC):
 
-    @abstractmethod
-    def calculate_total(self):
-        pass
-
-    @abstractmethod
-    def calculate_tax(self):
-        pass
-
-
-class Candy(MenuItem):
-    price_per_pound = Money('4.75', 'USD')
+class Candy:
+    price_per_pound = Money('4.75')
 
     def __init__(self, weight):
         self.weight = Decimal(weight)

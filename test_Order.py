@@ -1,5 +1,6 @@
 from unittest import TestCase
 
+import MenuItems
 from Order import Order
 from MenuItems import Candy, Cookies, IceCream, Sundae
 from money.money import Money
@@ -52,3 +53,22 @@ class TestOrder(TestCase):
         order.add_item(IceCream(1))
         order.add_item((IceCream(3)))
         self.assertEqual(Money('0.79'), order.calculate_tax(), "Test Order: cal tax with items")
+
+    def test_get_menu_items(self):
+        order = Order()
+        order.add_item(Candy(.45))
+        order.add_item(Cookies(1))
+        order.add_item(Candy(.5))
+        order.add_item(IceCream(2))
+        order.add_item(Candy(.31))
+        order.add_item(Cookies(2))
+        order.add_item(IceCream(1))
+        order.add_item(Candy(.25))
+        order.add_item((IceCream(3)))
+        ordered_items = order.get_items()
+        self.assertTrue(isinstance(ordered_items[0], MenuItems.Candy))
+        self.assertTrue(isinstance(ordered_items[3], MenuItems.Candy))
+        self.assertTrue(isinstance(ordered_items[4], MenuItems.Cookies))
+        self.assertTrue(isinstance(ordered_items[6], MenuItems.IceCream))
+        self.assertTrue(isinstance(ordered_items[8], MenuItems.IceCream))
+
