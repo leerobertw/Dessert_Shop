@@ -1,4 +1,5 @@
 from money.money import Money
+from itertools import groupby
 
 class Order:
     def __init__(self):
@@ -6,6 +7,9 @@ class Order:
 
     def add_item(self, item):
         self.menu_items.append(item)
+
+    def get_items(self):
+        return sorted(self.menu_items, key=lambda item: type(item).__name__)
 
     def calculate_total(self):
         total = Money('0')

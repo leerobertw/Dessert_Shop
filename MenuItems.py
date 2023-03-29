@@ -1,21 +1,10 @@
-from abc import ABC, abstractmethod
 from money.money import Money
 
 entertainment_tax_rate = 0.07
 food_tax_rate = 0.0625
 
-class MenuItem(ABC):
 
-    @abstractmethod
-    def calculate_total(self):
-        pass
-
-    @abstractmethod
-    def calculate_tax(self):
-        pass
-
-
-class Candy(MenuItem):
+class Candy:
     price_per_pound = Money('4.75')
 
     def __init__(self, weight):
@@ -28,7 +17,7 @@ class Candy(MenuItem):
         return self.calculate_total() * food_tax_rate
 
 
-class Cookies(MenuItem):
+class Cookies:
     price_per_dozen = Money('6.25')
 
     def __init__(self, count):
@@ -41,7 +30,7 @@ class Cookies(MenuItem):
         return self.calculate_total() * food_tax_rate
 
 
-class IceCream(MenuItem):
+class IceCream:
     price_per_scoop = Money('1.70')
 
     def __init__(self, scoops):
@@ -54,7 +43,7 @@ class IceCream(MenuItem):
         return self.calculate_total() * entertainment_tax_rate
 
 
-class Sundae(MenuItem):
+class Sundae:
     class HotFudge:
         cost = Money('1.25')
 
