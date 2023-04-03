@@ -1,3 +1,5 @@
+from enum import Enum
+
 from money.money import Money
 
 entertainment_tax_rate = 0.07
@@ -16,6 +18,8 @@ class Candy:
     def calculate_tax(self):
         return self.calculate_total() * food_tax_rate
 
+    def __str__(self):
+        return f"{self.weight} lbs of candy"
 
 class Cookies:
     price_per_dozen = Money('6.25')
@@ -29,6 +33,8 @@ class Cookies:
     def calculate_tax(self):
         return self.calculate_total() * food_tax_rate
 
+    def __str__(self):
+        return f"{self.count} dozen cookies"
 
 class IceCream:
     price_per_scoop = Money('1.70')
@@ -42,23 +48,18 @@ class IceCream:
     def calculate_tax(self):
         return self.calculate_total() * entertainment_tax_rate
 
+    def __str__(self):
+        return f"{self.scoops} scoops of ice cream"
+
+
+class SundaeToppings(Enum):
+    Hot_Fudge = Money('1.25')
+    Strawberry_Syrup = Money('0.75')
+    Carmel_Syrup = Money('0.50')
+    Peanuts = Money('0.35')
+    Coconut = Money('0.20')
 
 class Sundae:
-    class HotFudge:
-        cost = Money('1.25')
-
-    class StrawberrySyrup:
-        cost = Money('0.75')
-
-    class CarmelSyrup:
-        cost = Money('0.50')
-
-    class Peanuts:
-        cost = Money('0.35')
-
-    class Coconut:
-        cost = Money('0.20')
-
     def __init__(self):
         self.ice_cream_cost = IceCream(2).calculate_total()
         self.toppings = []
@@ -66,7 +67,7 @@ class Sundae:
     def calculate_total(self):
         total = self.ice_cream_cost
         for topping in self.toppings:
-            total += topping.cost
+            total += topping.value
         return total
 
     def calculate_tax(self):
@@ -74,3 +75,7 @@ class Sundae:
 
     def add_topping(self, topping):
         self.toppings.append(topping)
+
+    def __str__(self):
+        toppings_display = [topping.name for topping in self.toppings]
+        return f"Sundae with {', '.join(toppings_display)}"
