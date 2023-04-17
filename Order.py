@@ -12,13 +12,13 @@ class Order:
         return sorted(self.menu_items, key=lambda item: type(item).__name__)
 
     def calculate_total(self):
-        total = Money('0')
+        total = Money('0', 'USD')
         for item in self.menu_items:
             total += item.calculate_total()
         return total
 
     def calculate_tax(self):
-        tax = Money('0')
+        tax = Money('0', 'USD')
         for item in self.menu_items:
             tax += item.calculate_tax()
         return tax
