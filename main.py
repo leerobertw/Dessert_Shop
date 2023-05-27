@@ -99,6 +99,9 @@ def print_receipt(order):
     print("-----------------------------")
     for item in items:
         print(item)
+    cost, tax = order.calculate_total_and_tax()
+    print(cost)
+    print(tax)
 
 
 if __name__ == '__main__':
