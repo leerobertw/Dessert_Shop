@@ -1,4 +1,4 @@
-from enum import Enum
+from enum import Enum, StrEnum, auto
 from decimal import Decimal
 from overrides import override
 
@@ -38,15 +38,27 @@ class Cookies(MenuItem):
     def __str__(self):
         return f"{self._amount} dozen cookies"
 
+class IceCreamFlavors(StrEnum):
+    Vanilla = auto()
+    Chocolate = auto()
+    Strawberry = auto()
+    Huckleberry = auto()
+
+class IceCreamConeType(StrEnum):
+    Bowl = auto()
+    Cone = auto()
+    Waffle_Cone = "waffle cone"
 
 class IceCream(MenuItem):
     price_per_scoop = '1.70'
 
-    def __init__(self, scoops):
+    def __init__(self, scoops, flavor, cone_type):
         super().__init__(scoops, IceCream.price_per_scoop, entertainment_tax_rate)
+        self.flavor = flavor
+        self.cone_type = cone_type
 
     def __str__(self):
-        return f"{self._amount} scoops of ice cream"
+        return f"{self._amount} scoops of {self.flavor.value} ice cream in a {self.cone_type.value}"
 
 
 class SundaeToppings(Enum):
@@ -56,9 +68,9 @@ class SundaeToppings(Enum):
     Peanuts = '0.35'
     Coconut = '0.20'
 
-class Sundae(IceCream):
+class Sundae(MenuItem):
     def __init__(self):
-        super().__init__(2)
+        super().__init__('2', IceCream.price_per_scoop, entertainment_tax_rate)
         self.toppings = []
 
     @override

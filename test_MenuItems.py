@@ -71,3 +71,4 @@ class TestCandy(TestCase):
     def test_one_half_lb_candy(self):
         self.assertEqual((Money('2.375', 'USD'), Money('.1484375','USD')), Candy('0.5').get_total_and_tax(),
                          'Cost and Tax, 1/2 lb')
+
