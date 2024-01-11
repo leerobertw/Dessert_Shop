@@ -1,4 +1,4 @@
-from decimal import Decimal
+
 
 class Order:
     def __init__(self):
@@ -14,5 +14,5 @@ class Order:
         if len(self.menu_items) > 0:
             totals = [t.get_total_and_tax() for t in self.menu_items]
             total_cost, total_tax = map(sum, zip(*totals))
-            return str(total_cost.quantize(Decimal("0.01"))), str(total_tax.quantize(Decimal("0.01")))
-        return '0', '0'
+            return round(total_cost, 2), round(total_tax, 2)
+        return 0, 0

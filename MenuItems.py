@@ -1,39 +1,38 @@
 from enum import Enum, StrEnum, auto
-from decimal import Decimal
-from overrides import override
 
-entertainment_tax_rate = '0.07'
-food_tax_rate = '0.0625'
+
+entertainment_tax_rate = 0.07
+food_tax_rate = 0.0625
 
 class MenuItem:
     def __init__(self, amount, price, tax_rate):
-        self._amount = Decimal(amount)
-        self.__price = Decimal(price)
-        self.__tax_rate = Decimal(tax_rate)
+        self._amount = amount
+        self._price = price
+        self._tax_rate = tax_rate
 
     def calculate_total(self):
-        return self.__price * self._amount
+        return round(self._price * self._amount, 2)
 
     def get_total_and_tax(self):
         total_cost = self.calculate_total()
-        return total_cost, total_cost * self.__tax_rate
+        return total_cost, round(total_cost * self._tax_rate, 2)
 
 
 class Candy(MenuItem):
-    price_per_pound = '4.75'
+    price = 4.75
 
     def __init__(self, weight):
-        super().__init__(weight, Candy.price_per_pound, food_tax_rate)
+        super().__init__(weight, Candy.price, food_tax_rate)
 
     def __str__(self):
         return f"{self._amount} lbs of candy"
 
 
 class Cookies(MenuItem):
-    price_per_dozen = '6.25'
+    price = 6.25
 
     def __init__(self, count):
-        super().__init__(count, Cookies.price_per_dozen, food_tax_rate)
+        super().__init__(count, Cookies.price, food_tax_rate)
 
     def __str__(self):
         return f"{self._amount} dozen cookies"
@@ -50,10 +49,10 @@ class IceCreamConeType(StrEnum):
     Waffle_Cone = "waffle cone"
 
 class IceCream(MenuItem):
-    price_per_scoop = '1.70'
+    price = 1.70
 
     def __init__(self, scoops, flavor, cone_type):
-        super().__init__(scoops, IceCream.price_per_scoop, entertainment_tax_rate)
+        super().__init__(scoops, IceCream.price, entertainment_tax_rate)
         self.flavor = flavor
         self.cone_type = cone_type
 
@@ -62,20 +61,19 @@ class IceCream(MenuItem):
 
 
 class SundaeToppings(Enum):
-    Hot_Fudge = '1.25'
-    Strawberry_Syrup = '0.75'
-    Carmel_Syrup = '0.50'
-    Peanuts = '0.35'
-    Coconut = '0.20'
+    Hot_Fudge = 1.25
+    Strawberry_Syrup = 0.75
+    Carmel_Syrup = 0.50
+    Peanuts = 0.35
+    Coconut = 0.20
 
 class Sundae(MenuItem):
     def __init__(self):
-        super().__init__('2', IceCream.price_per_scoop, entertainment_tax_rate)
+        super().__init__(2, IceCream.price, entertainment_tax_rate)
         self.toppings = []
 
-    @override
     def calculate_total(self):
-        return super().calculate_total() + sum(Decimal(topping.value) for topping in self.toppings)
+        return round(super().calculate_total() + sum(topping.value for topping in self.toppings), 2)
 
     def add_topping(self, topping):
         self.toppings.append(topping)
