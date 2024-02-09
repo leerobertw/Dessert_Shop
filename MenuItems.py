@@ -38,15 +38,15 @@ class Cookies(MenuItem):
         return f"{self._amount} dozen cookies"
 
 class IceCreamFlavors(StrEnum):
-    Vanilla = auto()
-    Chocolate = auto()
-    Strawberry = auto()
-    Huckleberry = auto()
+    vanilla = auto()
+    chocolate = auto()
+    strawberry = auto()
+    huckleberry = auto()
 
 class IceCreamConeType(StrEnum):
-    Bowl = auto()
-    Cone = auto()
-    Waffle_Cone = "waffle cone"
+    bowl = auto()
+    cone = auto()
+    waffle_cone = auto()
 
 class IceCream(MenuItem):
     price = 1.70
@@ -58,15 +58,15 @@ class IceCream(MenuItem):
         self.cone_type = cone_type
 
     def __str__(self):
-        return f"{self._amount} scoops ice cream of {self.flavor.value} ice cream in a {self.cone_type.value}"
+        return f"{self._amount} scoops of {self.flavor.value} ice cream in a {self.cone_type.value}"
 
 
 class SundaeToppings(Enum):
-    Hot_Fudge = 1.25
-    Strawberry_Syrup = 0.75
-    Carmel_Syrup = 0.50
-    Peanuts = 0.35
-    Coconut = 0.20
+    hot_fudge = 1.25
+    strawberry_syrup = 0.75
+    carmel_syrup = 0.50
+    peanuts = 0.35
+    coconut = 0.20
 
 class Sundae(MenuItem):
     tax_rate = TaxRate.luxury

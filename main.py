@@ -1,5 +1,5 @@
 from Order import Order
-from MenuItems import Candy, Cookies, IceCream, Sundae, SundaeToppings
+from MenuItems import Candy, Cookies, IceCream, IceCreamFlavors, IceCreamConeType, Sundae, SundaeToppings
 
 
 def main():
@@ -58,9 +58,9 @@ def add_cookies(order):
 def add_icecream(order):
     scoops = input("How many scoops: ")
     if scoops.isdecimal():
-        order.add_item(IceCream(int(scoops)))
-    else:
-        print("Invalid entry")
+        flavor = input("Enter flavor - vanilla, chocolate, strawberry, huckleberry: ").lower().strip()
+        cone = input("Enter cone type - bowl, cone, waffle: ").lower().strip()
+        order.add_item(IceCream(int(scoops), IceCreamFlavors[flavor], IceCreamConeType[cone]))
 
 def add_sundae(order):
     sundae = Sundae()
@@ -79,15 +79,15 @@ def add_sundae_toppings(sundae):
         print("6 - Complete Order")
         cmd = input("Enter choice: ").strip()
         if cmd == '1':
-            sundae.add_topping(SundaeToppings.Hot_Fudge)
+            sundae.add_topping(SundaeToppings.hot_fudge)
         elif cmd == '2':
-            sundae.add_topping(SundaeToppings.Carmel_Syrup)
+            sundae.add_topping(SundaeToppings.carmel_syrup)
         elif cmd == '3':
-            sundae.add_topping(SundaeToppings.Strawberry_Syrup)
+            sundae.add_topping(SundaeToppings.strawberry_syrup)
         elif cmd == '4':
-            sundae.add_topping(SundaeToppings.Peanuts)
+            sundae.add_topping(SundaeToppings.peanuts)
         elif cmd == '5':
-            sundae.add_topping(SundaeToppings.Coconut)
+            sundae.add_topping(SundaeToppings.coconut)
         elif cmd == '6':
             break
         else:
@@ -99,9 +99,13 @@ def print_receipt(order):
     print("-----------------------------")
     for item in items:
         print(item)
-    cost, tax = order.calculate_total_and_tax()
-    print(cost)
-    print(tax)
+    cost, tax = order.get_total_and_tax()
+    print(f"Total cost: {cost:.2f}")
+    print(f"Tax: {tax:.2f}")
+    print(f"Total: {round(cost + tax):.2f}")
+    print("-----------------------------")
+    print()
+    print()
 
 
 if __name__ == '__main__':

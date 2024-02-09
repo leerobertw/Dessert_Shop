@@ -22,10 +22,10 @@ class TestOrder(TestCase):
 
     def test_calculate_total_ice_cream_sundae(self):
         order = Order()
-        order.add_item(IceCream(3, IceCreamFlavors.Vanilla, IceCreamConeType.Cone))
+        order.add_item(IceCream(3, IceCreamFlavors.vanilla, IceCreamConeType.cone))
         sundae = Sundae()
-        sundae.add_topping(SundaeToppings.Hot_Fudge)
-        sundae.add_topping(SundaeToppings.Peanuts)
+        sundae.add_topping(SundaeToppings.hot_fudge)
+        sundae.add_topping(SundaeToppings.peanuts)
         order.add_item(sundae)
         val, tax = order.get_total_and_tax()
         self.assertEqual((10.10, 0.76), (val, tax),
@@ -39,9 +39,9 @@ class TestOrder(TestCase):
     def test_calculate_cost_with_candy_and_ice_cream(self):
         order = Order()
         order.add_item(Candy(.25))
-        order.add_item(IceCream(2, IceCreamFlavors.Chocolate, IceCreamConeType.Cone))
-        order.add_item(IceCream(1, IceCreamFlavors.Strawberry, IceCreamConeType.Cone))
-        order.add_item((IceCream(3, IceCreamFlavors.Huckleberry, IceCreamConeType.Cone)))
+        order.add_item(IceCream(2, IceCreamFlavors.chocolate, IceCreamConeType.cone))
+        order.add_item(IceCream(1, IceCreamFlavors.strawberry, IceCreamConeType.cone))
+        order.add_item((IceCream(3, IceCreamFlavors.huckleberry, IceCreamConeType.cone)))
         self.assertEqual((11.39, 0.81), order.get_total_and_tax(),
                          "Test Order: calc cost with items")
 
@@ -50,12 +50,12 @@ class TestOrder(TestCase):
         order.add_item(Candy(0.45))
         order.add_item(Cookies(1))
         order.add_item(Candy(0.5))
-        order.add_item(IceCream(2, IceCreamFlavors.Vanilla, IceCreamConeType.Waffle_Cone))
+        order.add_item(IceCream(2, IceCreamFlavors.vanilla, IceCreamConeType.waffle_cone))
         order.add_item(Candy(.31))
         order.add_item(Cookies(2))
-        order.add_item(IceCream(1, IceCreamFlavors.Vanilla, IceCreamConeType.Cone))
+        order.add_item(IceCream(1, IceCreamFlavors.vanilla, IceCreamConeType.cone))
         order.add_item(Candy(0.25))
-        order.add_item((IceCream(3, IceCreamFlavors.Huckleberry, IceCreamConeType.Waffle_Cone)))
+        order.add_item((IceCream(3, IceCreamFlavors.huckleberry, IceCreamConeType.waffle_cone)))
         self.assertEqual((36.13, 1.55), order.get_total_and_tax())
 
     def test_get_menu_items(self):
@@ -63,12 +63,12 @@ class TestOrder(TestCase):
         order.add_item(Candy(.45))
         order.add_item(Cookies(1))
         order.add_item(Candy(.5))
-        order.add_item(IceCream(2, IceCreamFlavors.Vanilla, IceCreamConeType.Cone))
+        order.add_item(IceCream(2, IceCreamFlavors.vanilla, IceCreamConeType.cone))
         order.add_item(Candy(.31))
         order.add_item(Cookies(2))
-        order.add_item(IceCream(1, IceCreamFlavors.Chocolate, IceCreamConeType.Cone))
+        order.add_item(IceCream(1, IceCreamFlavors.chocolate, IceCreamConeType.cone))
         order.add_item(Candy(.25))
-        order.add_item((IceCream(3, IceCreamFlavors.Strawberry, IceCreamConeType.Cone)))
+        order.add_item((IceCream(3, IceCreamFlavors.strawberry, IceCreamConeType.cone)))
         ordered_items = order.get_items()
         self.assertTrue(isinstance(ordered_items[0], MenuItems.Candy))
         self.assertTrue(isinstance(ordered_items[3], MenuItems.Candy))

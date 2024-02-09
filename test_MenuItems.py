@@ -9,47 +9,47 @@ class TestSundae(TestCase):
 
     def test_calculate_total_hot_fudge(self):
         sundae = Sundae()
-        sundae.add_topping(SundaeToppings.Hot_Fudge)
+        sundae.add_topping(SundaeToppings.hot_fudge)
         self.assertEqual((4.65, .35), sundae.get_total_and_tax(), 'Sundae: calculate total: hot fudge')
 
     def test_calculate_total_hot_fudge_peanuts(self):
         sundae = Sundae()
-        sundae.add_topping(SundaeToppings.Hot_Fudge)
-        sundae.add_topping(SundaeToppings.Peanuts)
+        sundae.add_topping(SundaeToppings.hot_fudge)
+        sundae.add_topping(SundaeToppings.peanuts)
         self.assertEqual((5.00, 0.38), sundae.get_total_and_tax(), 'Sundae: calc total: hot fudge, peanuts')
 
     def test_calc_total_double_hot_fudge_peanuts(self):
         sundae = Sundae()
-        sundae.add_topping(SundaeToppings.Hot_Fudge)
-        sundae.add_topping(SundaeToppings.Hot_Fudge)
-        sundae.add_topping(SundaeToppings.Peanuts)
+        sundae.add_topping(SundaeToppings.hot_fudge)
+        sundae.add_topping(SundaeToppings.hot_fudge)
+        sundae.add_topping(SundaeToppings.peanuts)
         self.assertEqual((6.25, .47), sundae.get_total_and_tax(),
                          'Sundae: calculate total: double hot fudge, peanuts')
 
     def test_calculate_total_strawberry_double_coconut(self):
         sundae = Sundae()
-        sundae.add_topping(SundaeToppings.Strawberry_Syrup)
-        sundae.add_topping(SundaeToppings.Coconut)
+        sundae.add_topping(SundaeToppings.strawberry_syrup)
+        sundae.add_topping(SundaeToppings.coconut)
         self.assertEqual((4.35, 0.33), sundae.get_total_and_tax(),
                          'Sundae: calculate total: Strawberry Syrup, coconut')
 
     def test_str(self):
         sundae = Sundae()
-        sundae.add_topping(SundaeToppings.Hot_Fudge)
-        sundae.add_topping(SundaeToppings.Carmel_Syrup)
-        sundae.add_topping(SundaeToppings.Peanuts)
-        self.assertEqual('Sundae with Hot_Fudge, Carmel_Syrup, Peanuts', str(sundae))
+        sundae.add_topping(SundaeToppings.hot_fudge)
+        sundae.add_topping(SundaeToppings.carmel_syrup)
+        sundae.add_topping(SundaeToppings.peanuts)
+        self.assertEqual('Sundae with hot_fudge, carmel_syrup, peanuts', str(sundae))
 
 
 class TestIceCream(TestCase):
     def test_calculate_total_one_scoop(self):
         self.assertEqual((1.70, 0.13),
-                         IceCream(1, IceCreamFlavors.Vanilla, IceCreamConeType.Cone).get_total_and_tax(),
+                         IceCream(1, IceCreamFlavors.vanilla, IceCreamConeType.cone).get_total_and_tax(),
                          'Cal total, one scoop')
 
     def test_calculate_total_two_scoop(self):
         self.assertEqual((3.40, 0.26),
-                         IceCream(2, IceCreamFlavors.Vanilla, IceCreamConeType.Cone).get_total_and_tax(),
+                         IceCream(2, IceCreamFlavors.vanilla, IceCreamConeType.cone).get_total_and_tax(),
                          'Cal total, one scoop')
 
 
