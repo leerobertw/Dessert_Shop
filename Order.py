@@ -10,9 +10,11 @@ class Order:
     def get_items(self):
         return sorted(self.menu_items, key=lambda item: type(item).__name__)
 
-    def calculate_total_and_tax(self):
-        if len(self.menu_items) > 0:
-            totals = [t.get_total_and_tax() for t in self.menu_items]
-            total_cost, total_tax = map(sum, zip(*totals))
-            return round(total_cost, 2), round(total_tax, 2)
-        return 0, 0
+    def get_total_and_tax(self):
+        total = 0
+        tax = 0
+        for item in self.menu_items:
+            tot, tx = item.get_total_and_tax()
+            total += tot
+            tax += tx
+        return round(total, 2), round(tax, 2)

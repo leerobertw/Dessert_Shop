@@ -1,28 +1,27 @@
 from enum import Enum, StrEnum, auto
 
-
-entertainment_tax_rate = 0.07
-food_tax_rate = 0.0625
+class TaxRate(Enum):
+    food = 0.03
+    luxury = 0.0751
 
 class MenuItem:
     def __init__(self, amount, price, tax_rate):
         self._amount = amount
         self._price = price
-        self._tax_rate = tax_rate
-
-    def calculate_total(self):
-        return round(self._price * self._amount, 2)
+        self.tax_rate = tax_rate
 
     def get_total_and_tax(self):
-        total_cost = self.calculate_total()
-        return total_cost, round(total_cost * self._tax_rate, 2)
+        total = self._price * self._amount
+        tax = self.tax_rate.value * total
+        return round(total, 2), round(tax, 2)
 
 
 class Candy(MenuItem):
     price = 4.75
+    tax_rate = TaxRate.food
 
     def __init__(self, weight):
-        super().__init__(weight, Candy.price, food_tax_rate)
+        super().__init__(weight, Candy.price, Candy.tax_rate)
 
     def __str__(self):
         return f"{self._amount} lbs of candy"
@@ -30,9 +29,10 @@ class Candy(MenuItem):
 
 class Cookies(MenuItem):
     price = 6.25
+    tax_rate = TaxRate.food
 
     def __init__(self, count):
-        super().__init__(count, Cookies.price, food_tax_rate)
+        super().__init__(count, Cookies.price, Cookies.tax_rate)
 
     def __str__(self):
         return f"{self._amount} dozen cookies"
@@ -50,14 +50,15 @@ class IceCreamConeType(StrEnum):
 
 class IceCream(MenuItem):
     price = 1.70
+    tax_rate = TaxRate.luxury
 
     def __init__(self, scoops, flavor, cone_type):
-        super().__init__(scoops, IceCream.price, entertainment_tax_rate)
+        super().__init__(scoops, IceCream.price, IceCream.tax_rate)
         self.flavor = flavor
         self.cone_type = cone_type
 
     def __str__(self):
-        return f"{self._amount} scoops of {self.flavor.value} ice cream in a {self.cone_type.value}"
+        return f"{self._amount} scoops ice cream of {self.flavor.value} ice cream in a {self.cone_type.value}"
 
 
 class SundaeToppings(Enum):
@@ -68,12 +69,17 @@ class SundaeToppings(Enum):
     Coconut = 0.20
 
 class Sundae(MenuItem):
+    tax_rate = TaxRate.luxury
+    ice_cream_scoops = 2
+
     def __init__(self):
-        super().__init__(2, IceCream.price, entertainment_tax_rate)
+        super().__init__(Sundae.ice_cream_scoops, IceCream.price, Sundae.tax_rate)
         self.toppings = []
 
-    def calculate_total(self):
-        return round(super().calculate_total() + sum(topping.value for topping in self.toppings), 2)
+    def get_total_and_tax(self):
+        total = (Sundae.ice_cream_scoops * IceCream.price) + sum(topping.value for topping in self.toppings)
+        tax = Sundae.tax_rate.value * total
+        return round(total, 2), round(tax, 2)
 
     def add_topping(self, topping):
         self.toppings.append(topping)
