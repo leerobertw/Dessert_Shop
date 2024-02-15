@@ -85,5 +85,21 @@ class Sundae(MenuItem):
         self.toppings.append(topping)
 
     def __str__(self):
-        toppings_display = [topping.name for topping in self.toppings]
-        return f"Sundae with {', '.join(toppings_display)}"
+        toppings_display_list = []
+        fudge_count = self.toppings.count(SundaeToppings.hot_fudge)
+        carmel_count = self.toppings.count(SundaeToppings.carmel_syrup)
+        peanuts_count = self.toppings.count(SundaeToppings.peanuts)
+        coconut_count = self.toppings.count(SundaeToppings.coconut)
+        strawberry_count = self.toppings.count(SundaeToppings.strawberry_syrup)
+
+        if fudge_count > 0:
+            toppings_display_list.append(f'{fudge_count} hot fudge pumps')
+        if carmel_count > 0:
+            toppings_display_list.append(f'{carmel_count} carmel syrup pumps')
+        if strawberry_count > 0:
+            toppings_display_list.append(f'{strawberry_count} strawberry syrup pumps')
+        if peanuts_count > 0:
+            toppings_display_list.append(f'{peanuts_count} peanut scoops')
+        if coconut_count > 0:
+            toppings_display_list.append(f'{coconut_count} coconut scoops')
+        return 'Sundae with ' + ', '.join(toppings_display_list)
